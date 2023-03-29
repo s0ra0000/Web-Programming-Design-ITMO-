@@ -38,14 +38,14 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $sql = "UPDATE `todolist` SET `text`= '$text', `deadline`= '$deadline', `color`= '$color' WHERE id='$id'";
 
         if (mysqli_query($conn, $sql)) {
-            //header("location: index.php");
+            header("location: index.php?id=".$id."");
         } else {
             echo "Something went wrong. Please try again later.";
         }
 
     }
     mysqli_close($conn);
-} else{
+}else{
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         $id = trim($_GET["id"]);
         $query = mysqli_query($conn,"SELECT * FROM todolist WHERE id = '$id'");
@@ -55,64 +55,55 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             $color  = $todolist["color"];
         } else {
             echo "Something went wrong. Please try again later.";
-            header("location: update.php");
+            header("location: index.php");
             exit();
         }
         mysqli_close($conn);
     }else{
         echo "Something went wrong. Please try again later.";
-        header("location: update.php");
+        header("location: index.php");
         exit();
     }
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style>
-        .wrapper {
-            width: 1200px;
-            margin: 0 auto;
-        }
-    </style>
+    <title>Update List</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="page-header">
-                    <h2>Update User</h2>
-                </div>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-                    <div class="form-group <?php echo (!empty($text_error)) ? 'has-error' : ''; ?>">
-                        <label>Text</label>
-                        <input type="text" name="text" class="form-control" value="<?php echo $text; ?>">
-                        <span class="help-block"><?php echo $text_error;?></span>
-                    </div>
-
-                    <div class="form-group <?php echo (!empty($deadline_error)) ? 'has-error' : ''; ?>">
-                        <label>Deadline</label>
-                        <input type="text" name="deadline" class="form-control" value="<?php echo $deadline; ?>">
-                        <span class="help-block"><?php echo $deadline_error;?></span>
-                    </div>
-
-                    <div class="form-group <?php echo (!empty($color_error)) ? 'has-error' : ''; ?>">
-                        <label>Color</label>
-                        <input type="text" name="color" class="form-control" value="<?php echo $color; ?>">
-                        <span class="help-block"><?php echo $color_error;?></span>
-                    </div>
-
-                    <input type="submit" class="btn btn-primary" value="Submit">
-                    <a href="index.php" class="btn btn-default">Cancel</a>
-                </form>
+    <div class="container">
+        <div class="content">
+            <div class="page-header">
+                <h2>Update list</h2>
             </div>
+            <form action="update.php" method="post">
+
+                <div class="form-group <?php echo (!empty($text_error)) ? 'has-error' : ''; ?>">
+                    <label>Text</label>
+                    <input type="text" name="text" class="form-control" value="<?php echo $text; ?>">
+                    <span class="help-block"><?php echo $text_error;?></span>
+                </div>
+
+                <div class="form-group <?php echo (!empty($deadline_error)) ? 'has-error' : ''; ?>">
+                    <label>Deadline</label>
+                    <input type="date" name="deadline" class="form-control" value="<?php echo $deadline; ?>">
+                    <span class="help-block"><?php echo $deadline_error;?></span>
+                </div>
+
+                <div class="form-group <?php echo (!empty($color_error)) ? 'has-error' : ''; ?>">
+                    <label>Color</label>
+                    <input type="color" name="color" class="form-control" value="<?php echo $color; ?>">
+                    <span class="help-block"><?php echo $color_error;?></span>
+                </div>
+                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                <input type="submit" class="btn" value="Update">
+                <?php echo ' <a href="index.php?id='.$id.'" class="btn-cancel">Cancel</a>' ?>
+
+            </form>
         </div>
     </div>
 </div>

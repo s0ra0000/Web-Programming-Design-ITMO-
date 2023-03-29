@@ -1,21 +1,24 @@
 <?php
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
     require_once "config.php";
-    $id = $_POST["id"];
+    $id = trim($_POST["id"]);
 
     $query = "DELETE FROM todolist WHERE id = '$id'";
 
     if (mysqli_query($conn, $query)) {
-        //header("location: index.php");
+        header("location: list.php");
     } else {
         echo "Something went wrong. Please try again later.";
     }
-
     mysqli_close($conn);
 } else {
+    if(isset($_GET["id"]) && !empty($_GET["id"])){
+        require_once "config.php";
+        $id = trim($_GET["id"]);
+    }
     if (empty(trim($_GET["id"]))) {
         echo "Something went wrong. Please try again later.";
-        //header("location: index.php");
+        header("location: index.php");
         exit();
     }
 }
@@ -25,7 +28,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 <head>
     <meta charset="UTF-8">
     <title>View Record</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         .wrapper{
             width: 500px;
@@ -35,24 +38,22 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 </head>
 <body>
 <div class="wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="page-header">
-                    <h1>Delete Record</h1>
-                </div>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <div class="alert alert-danger fade in">
-                        <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>"/>
-                        <p>Are you sure you want to delete this record?</p><br>
-                        <p>
-                            <input type="submit" value="Yes" class="btn btn-danger">
-                            <a href="index.php" class="btn btn-default">No</a>
-                        </p>
-                    </div>
-                </form>
-            </div>
+    <div class="container-delete">
+        <div class="page-header">
+            <h1>Delete list</h1>
         </div>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="delete">
+                <input type="hidden" name="id" value="<?php echo trim($_GET["id"]); ?>"/>
+                <p>Are you sure you want to delete this list?</p><br>
+                <p>
+                    <input type="submit" value="Delete" class="btn delete-btn dlt">
+                    <?php echo '<a href="index.php?id=' . $id . '"class="cancel cancel-btn">Back</a>'; ?>
+
+
+                </p>
+            </div>
+        </form>
     </div>
 </div>
 </body>

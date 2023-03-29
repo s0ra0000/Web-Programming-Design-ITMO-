@@ -35,7 +35,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $sql = "INSERT INTO `todolist` (`text`, `deadline`, `color`) VALUES ('$text', '$deadline', '$color')";
 
         if (mysqli_query($conn, $sql)) {
-//            header("location: index.php");
+            $last_id = mysqli_query($conn, "SELECT id FROM todolist ORDER BY id DESC LIMIT 1;");
+            if ($todolist = mysqli_fetch_assoc($last_id)){
+                header("location: index.php?id=".$todolist["id"]."");
+            }
         } else {
             echo "Something went wrong. Please try again later.";
         }
@@ -48,46 +51,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style>
-        .wrapper {
-            width: 1200px;
-            margin: 0 auto;
-        }
-    </style>
+    <title>Create List</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="page-header">
-                    <h2>Create User</h2>
-                </div>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <div class="form-group <?php echo (!empty($text_error)) ? 'has-error' : ''; ?>">
-                        <label>Text</label>
-                        <input type="text" name="text" class="form-control" value="">
-                        <span class="help-block"><?php echo $text_error;?></span>
-                    </div>
-
-                    <div class="form-group <?php echo (!empty($deadline_error)) ? 'has-error' : ''; ?>">
-                        <label>Deadline</label>
-                        <input type="text" name="deadline" class="form-control" value="">
-                        <span class="help-block"><?php echo $deadline_error;?></span>
-                    </div>
-
-                    <div class="form-group <?php echo (!empty($color_error)) ? 'has-error' : ''; ?>">
-                        <label>Color</label>
-                        <input type="text" name="color" class="form-control" value="">
-                        <span class="help-block"><?php echo $color_error;?></span>
-                    </div>
-
-                    <input type="submit" class="btn btn-primary" value="Submit">
-                    <a href="index.php" class="btn btn-default">Cancel</a>
-                </form>
+    <div class="container">
+        <div class="content">
+            <div class="page-header">
+                <h2>Create list</h2>
             </div>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="form-group">
+                    <label>Text</label>
+                    <input type="text" name="text" class="form-control" value="">
+                    <span class="help-block"><?php echo $text_error;?></span>
+                </div>
+
+                <div class="form-group ">
+                    <label>Deadline</label>
+                    <input type="date" name="deadline" class="form-control" value="">
+                    <span class="help-block"><?php echo $deadline_error;?></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Color</label>
+                    <input type="color" name="color" class="form-control" value="#d57474">
+                    <span class="help-block"><?php echo $color_error;?></span>
+                </div>
+
+                <input type="submit" class="btn" value="Add">
+                <a href="index.php" class="btn-cancel">Cancel</a>
+            </form>
         </div>
     </div>
 </div>
