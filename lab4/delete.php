@@ -1,10 +1,16 @@
 <?php
 if (isset($_POST["id"]) && !empty($_POST["id"])) {
-    require_once "config.php";
+    include_once "config.php";
     $id = trim($_POST["id"]);
-
+    $delete_item = null;
+    foreach($xml -> children() as $item){
+        if($item["id"] == $id){
+            unset($xml->item[$id]);
+        }
+    }
+    $xml->saveXML("database.xml");
+    header("location: list.php");
     $query = "DELETE FROM todolist WHERE id = '$id'";
-
     if (mysqli_query($conn, $query)) {
         header("location: list.php");
     } else {
@@ -49,12 +55,11 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
                 <p>
                     <input type="submit" value="Delete" class="btn delete-btn dlt">
                     <?php echo '<a href="index.php?id=' . $id . '"class="cancel cancel-btn">Back</a>'; ?>
-
-
                 </p>
             </div>
         </form>
     </div>
 </div>
+<script src="js/script.js"></script>
 </body>
 </html>

@@ -40,13 +40,13 @@ else{
 <body>
 <div class="wrapper">
     <div class="container">
-       <div class="main">
-           <div class="page-header">
-               <h2><?php if(!isset($todolist)){
-                    echo "Welcome to ";
-                   }?>MY TODOLIST</h2>
-           </div>
-           <?php
+        <div class="main">
+            <div class="page-header">
+                <h2><?php if(!isset($todolist)){
+                        echo "Welcome to ";
+                    }?>MY TODOLIST</h2>
+            </div>
+            <?php
             if(isset($todolist)){
                 echo '
                     <div class="list" style="border:4px dotted '.$color.'">
@@ -58,12 +58,13 @@ else{
                     
                 ';
             }
-           ?>
+            ?>
 
-           <a href="create.php"><button class="create-new-btn">Create new</button></a>
-           <a href="list.php"><button class="to-list-btn">Watch list</button></a>
-       </div>
+            <a href="create.php"><button class="create-new-btn">Create new</button></a>
+            <a href="list.php"><button class="to-list-btn">Watch list</button></a>
+        </div>
     </div>
 </div>
+<script src="js/script.js"></script>
 </body>
 </html>

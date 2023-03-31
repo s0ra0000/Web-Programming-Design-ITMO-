@@ -107,5 +107,6 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         </div>
     </div>
 </div>
+<script src="js/script.js"></script>
 </body>
 </html>
