@@ -1,10 +1,11 @@
 <?php
 require_once "config.php";
-
 $text=$deadline=$color="";
 $text_error=$deadline_error=$color_error="";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $text = trim($_POST["text"]);
+    $json = file_get_contents('php://input');
+    $data = json_decode($json,true);
+    $text = $data['text'];
     if (empty($text)) {
         $text_error = "Text is required.";
     } elseif (!filter_var($text, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"(.*?)")))) {
@@ -12,8 +13,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else {
         $text = $text;
     }
-
-    $deadline = trim($_POST["deadline"]);
+    $deadline = $data['deadline'];
     if (empty($deadline)) {
         $deadline_error = "deadline is required.";
     } elseif (!filter_var($deadline, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"(.*?)")))) {
@@ -22,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $deadline = $deadline;
     }
 
-    $color = trim($_POST["color"]);
+    $color = $data['color'];
     if (empty($color)) {
         $color_error = "color is required.";
     } elseif (!filter_var($color, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"(.*?)")))) {
@@ -37,13 +37,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if (mysqli_query($conn, $sql)) {
             $last_id = mysqli_query($conn, "SELECT id FROM todolist ORDER BY id DESC LIMIT 1;");
             if ($todolist = mysqli_fetch_assoc($last_id)){
-                header("location: index.php?id=".$todolist["id"]."");
+               echo $todolist["id"];
             }
         } else {
             echo "Something went wrong. Please try again later.";
         }
     }
-
     mysqli_close($conn);
 }
 ?>

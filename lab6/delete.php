@@ -1,12 +1,12 @@
 <?php
-if (isset($_POST["id"]) && !empty($_POST["id"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once "config.php";
-    $id = trim($_POST["id"]);
-
+    $json = file_get_contents('php://input');
+    $data = json_decode($json,true);
+    $id = $data['id'];
     $query = "DELETE FROM todolist WHERE id = '$id'";
-
     if (mysqli_query($conn, $query)) {
-        header("location: list.php");
+       echo $id;
     } else {
         echo "Something went wrong. Please try again later.";
     }
