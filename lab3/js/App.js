@@ -1,4 +1,3 @@
-console.log("wtf");
 const data = [
 	{
 		"name": "Astra Glenn",
@@ -93,7 +92,7 @@ function delete_row(){
     const id = get_delete_id();
     console.log(id)
     if(id===null){
-        alert("wtf");
+        alert("no id");
     }else{
         var row = document.getElementById(id);
         try{
@@ -122,7 +121,7 @@ function create_table(){
         table_container.append(table);
         enable_buttons();
     } else{
-        alert("there is table")
+        alert("table is already created")
     }
     
 }
