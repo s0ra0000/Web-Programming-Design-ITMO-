@@ -313,6 +313,13 @@ a{
     margin-bottom: 10px;
     color: #1e1e1e;
 }
+td a{
+    text-decoration: none;
+    color: #1e1e1e;
+}
+a:visited{
+    color: #1e1e1e;
+}
 
 
 

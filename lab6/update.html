@@ -12,7 +12,7 @@
       <div class="page-header">
         <h2>Update list</h2>
       </div>
-      <form action="" method="post">
+      <form action="" method="post" onsubmit="update()">
         <div class="form-group">
           <label>Text</label>
           <input id="text" type="text" name="text" class="form-control" value="">
@@ -29,7 +29,7 @@
           <span class="help-block"><?php echo $color_error;?></span>
         </div>
         <input id="id" type="hidden" name="id" value=""/>
-        <input type="submit" class="btn" value="Update" onclick="update()">
+        <input type="submit" class="btn" value="Update">
          <a id="dlt-btn" href="index.html?id=" class="btn-cancel">Cancel</a>
 
       </form>

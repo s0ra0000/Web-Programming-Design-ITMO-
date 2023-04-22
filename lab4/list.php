@@ -1,8 +1,5 @@
 <?php
 require_once "config.php";
-$sql = "SELECT * FROM todolist";
-$result =$conn->query($sql);
-
 ?>
 
 <html lang="en">

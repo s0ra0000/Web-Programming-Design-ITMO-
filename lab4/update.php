@@ -35,13 +35,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }
     if (empty($text_error) && empty($deadline_error) && empty($color_error)) {
 
-        $sql = "UPDATE `todolist` SET `text`= '$text', `deadline`= '$deadline', `color`= '$color' WHERE id='$id'";
-
-        if (mysqli_query($conn, $sql)) {
-            header("location: index.php?id=".$id."");
-        } else {
-            echo "Something went wrong. Please try again later.";
-        }
+       header("location: index.php?id=" . $id);
 
     }
     foreach($xml -> children() as $item){
